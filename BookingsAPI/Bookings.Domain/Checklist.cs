@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using Bookings.Domain.Participants;
 using System.Linq;
+using Bookings.Domain.Enumerations;
+using Bookings.Domain.Validations;
 
 namespace Bookings.Domain
 {
@@ -19,7 +21,7 @@ namespace Bookings.Domain
         {
             _participant = participant;
             _questions = questions.ToList();
-           // _questions.ForEach(ValidateQuestionRole);
+           _questions.ForEach(ValidateQuestionRole);
             _answers = answers.ToList();
         }
 
@@ -29,50 +31,50 @@ namespace Bookings.Domain
         /// <summary>
         /// True if there are questions that must be answered by the participant
         /// </summary>
-        //public bool IsRequiredForHearing(Hearing hearing)
-        //{
-        //    var hearingIsPending = hearing.Status != HearingStatus.Closed &&
-        //                           hearing.ScheduledDateTime >= DateTime.UtcNow.Date;
+        public bool IsRequiredForHearing(Hearing hearing)
+        {
+            var hearingIsPending = hearing.Status != HearingStatus.Closed &&
+                                   hearing.ScheduledDateTime >= DateTime.UtcNow.Date;
 
-        //    return _questions.Any() && !IsSubmitted && hearingIsPending;
-        //}
+            return _questions.Any() && !IsSubmitted && hearingIsPending;
+        }
 
         public bool IsSubmitted => _answers.Count > 1;
 
-        //private void ValidateQuestionRole(ChecklistQuestion question)
-        //{
-        //    if (question.UserRole.Name.ToLower()== _participant.)
-        //        return;
+        private void ValidateQuestionRole(ChecklistQuestion question)
+        {
+            if (question.UserRole.Name.ToLower() == _participant.HearingRole.UserRole.Name.ToLower())
+                return;
 
-        //    throw new DomainRuleException(nameof(Checklist), $"Question does not belong to role '{_participant.Role}': {question.Key}");
-        //}
+            throw new DomainRuleException(nameof(Checklist), $"Question does not belong to role '{_participant.HearingRole.UserRole.Name}': {question.Key}");
+        }
 
-        //public void Answer(string questionKey, string answer, string notes)
-        //{
-        //    if (_answers.Any(x => x.Question.Key == questionKey))
-        //    {
-        //        throw new DomainRuleException(nameof(Checklist),
-        //            $"An answer to question '{questionKey}' has already been set");
-        //    }
+        public void Answer(string questionKey, string answer, string notes)
+        {
+            if (_answers.Any(x => x.Question.Key == questionKey))
+            {
+                throw new DomainRuleException(nameof(Checklist),
+                    $"An answer to question '{questionKey}' has already been set");
+            }
 
-        //    _answers.Add(new ChecklistAnswer(GetQuestion(questionKey))
-        //    {
-        //        Answer = answer,
-        //        Notes = notes
-        //    });
-        //}
+            _answers.Add(new ChecklistAnswer(GetQuestion(questionKey))
+            {
+                Answer = answer,
+                Notes = notes
+            });
+        }
 
-        //private ChecklistQuestion GetQuestion(string questionKey)
-        //{
-        //    var question = _questions.FirstOrDefault(q => q.Key == questionKey);
-        //    if (question == null)
-        //    {
-        //        throw new DomainRuleException(nameof(Checklist),
-        //            $"No question with key '{questionKey}' exists for role '{_participant.Role}'");
-        //    }
+        private ChecklistQuestion GetQuestion(string questionKey)
+        {
+            var question = _questions.FirstOrDefault(q => q.Key == questionKey);
+            if (question == null)
+            {
+                throw new DomainRuleException(nameof(Checklist),
+                    $"No question with key '{questionKey}' exists for role '{_participant.HearingRole.UserRole.Name}'");
+            }
 
-        //    return question;
-        //}
+            return question;
+        }
 
         /// <summary>
         /// Creates a brand new checklist ignoring any existing answers
@@ -85,9 +87,9 @@ namespace Bookings.Domain
         ///// <summary>
         ///// Creates a checklist containing the answers put in by the participant already
         ///// </summary>
-        //public static Checklist Existing(Participant participant, IEnumerable<ChecklistQuestion> questions)
-        //{
-        //    return new Checklist(participant, questions, participant.GetChecklistAnswers());
-        //}
+        public static Checklist Existing(Participant participant, IEnumerable<ChecklistQuestion> questions)
+        {
+            return new Checklist(participant, questions, participant.GetChecklistAnswers());
+        }
     }
 }

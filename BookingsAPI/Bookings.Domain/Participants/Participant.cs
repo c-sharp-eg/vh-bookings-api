@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Bookings.Domain.Ddd;
 using Bookings.Domain.RefData;
 
@@ -40,6 +41,11 @@ namespace Bookings.Domain.Participants
         public DateTime UpdatedDate { get; set; }
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
+
+        public IEnumerable<ChecklistAnswer> GetChecklistAnswers()
+        {
+            return ChecklistAnswers.ToList();
+        }
 
     }
 }
