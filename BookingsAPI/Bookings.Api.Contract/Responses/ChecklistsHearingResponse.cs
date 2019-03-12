@@ -9,7 +9,7 @@ namespace Bookings.Api.Contract.Responses
     /// </summary>
     public class ChecklistsHearingResponse
     {
-        public long HearingId { get; set; }
+        public Guid HearingId { get; set; }
 
         public DateTime ScheduledDateTime { get; set; }
 

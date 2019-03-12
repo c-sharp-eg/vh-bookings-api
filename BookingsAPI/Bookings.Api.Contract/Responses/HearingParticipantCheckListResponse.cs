@@ -6,9 +6,9 @@ namespace Bookings.Api.Contract.Responses
 {
     public class HearingParticipantCheckListResponse
     {
-        public long HearingId { get; set; }
+        public Guid HearingId { get; set; }
 
-        public long ParticipantId { get; set; }
+        public Guid ParticipantId { get; set; }
 
         /// <summary>
         /// The participants title (i.e. Mr, Ms)

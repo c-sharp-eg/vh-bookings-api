@@ -11,5 +11,10 @@ namespace Bookings.API.Validations
             RuleFor(x => x.PageSize).GreaterThan(1);
             RuleFor(x => x.PageSize).LessThan(maxPageSize);
         }
+
+        public static PaginationValidator WithMaxPageSize(int maxPageSize)
+        {
+            return new PaginationValidator(maxPageSize);
+        }
     }
 }
