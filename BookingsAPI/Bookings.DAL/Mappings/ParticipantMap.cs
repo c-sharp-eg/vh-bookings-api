@@ -20,7 +20,6 @@ namespace Bookings.DAL.Mappings
             builder.HasOne(x => x.CaseRole).WithMany().HasForeignKey(x => x.CaseRoleId);
             builder.HasOne(x => x.HearingRole).WithMany().HasForeignKey(x => x.HearingRoleId);
             builder.HasMany<ChecklistAnswer>("ChecklistAnswers").WithOne().HasForeignKey("ParticipantId");
-            builder.HasOne(x => x.Hearing).WithMany("Participants").HasForeignKey(x => x.HearingId);
             builder.HasOne<Hearing>("Hearing").WithMany("Participants").HasForeignKey(x => x.HearingId);
         }
     }

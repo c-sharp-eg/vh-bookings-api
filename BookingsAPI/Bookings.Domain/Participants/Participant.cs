@@ -31,7 +31,7 @@ namespace Bookings.Domain.Participants
         public virtual Person Person { get; protected set; }
         public Guid HearingId { get; protected set; }
 
-        public virtual Hearing Hearing { get; protected set; }
+        
         public virtual IList<ChecklistAnswer> ChecklistAnswers { get; set; }
 
         protected virtual Hearing Hearing { get; set; }   
