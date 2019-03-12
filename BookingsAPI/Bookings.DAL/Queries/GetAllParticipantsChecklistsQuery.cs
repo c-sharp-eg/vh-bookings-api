@@ -12,7 +12,7 @@ namespace Bookings.DAL.Queries
     {
     }
 
-    public class GetAllParticipantsChecklistsQueryHandler : IQueryHandler<GetAllParticipantsChecklistsQuery, IQueryable<Participant>>
+    public class GetAllParticipantsChecklistsQueryHandler : IQueryHandler<GetAllParticipantsChecklistsQuery, List<Participant>>
     {
         private readonly BookingsDbContext _context;
 
