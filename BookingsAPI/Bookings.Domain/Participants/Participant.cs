@@ -47,5 +47,14 @@ namespace Bookings.Domain.Participants
             return ChecklistAnswers.ToList();
         }
 
+        public void UpdateChecklist(Checklist checklist)
+        {
+            ChecklistAnswers.Clear();
+            foreach (var answer in checklist.Answers)
+            {
+                ChecklistAnswers.Add(answer);
+            }
+        }
+
     }
 }

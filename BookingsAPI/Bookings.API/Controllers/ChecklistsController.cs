@@ -18,7 +18,7 @@ using Bookings.Domain.Participants;
 using Bookings.Domain.RefData;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using Bookings.API.Mappings;
+
 
 namespace Bookings.API.Controllers
 {
@@ -50,7 +50,7 @@ namespace Bookings.API.Controllers
         [ProducesResponseType(typeof(ChecklistsResponse), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> GetAllParticipantsChecklists(int pageSize = 5, int page = 1)
+        public async Task<IActionResult> GetAlarticipantsChecklists(int pageSize = 5, int page = 1)
         {
             var validationResult = PaginationValidator
              .WithMaxPageSize(1000)
@@ -84,6 +84,43 @@ namespace Bookings.API.Controllers
             return Ok(response);
 
         }
+
+        /// <summary>
+        ///     Add the pre-hearing check list of a hearing's participant.
+        /// </summary>
+        /// <param name="hearingId">Id of the hearing the checklist is being submitted for</param>
+        /// <param name="participantId">Id of the participant</param>
+        /// <param name="request">Checklist to submit</param>
+        /// <returns></returns>
+        [HttpPost("{hearingId}/participants/{participantId}/checklist")]
+        [SwaggerOperation(OperationId = "AddChecklistToHearingParticipant")]
+        [ProducesResponseType((int)HttpStatusCode.Created)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> AddPreHearingChecklist(Guid hearingId, Guid participantId,
+            AddPreHearingChecklistRequest request)
+        {
+            
+                if (hearingId ==Guid.Empty) ModelState.AddModelError("hearingId", "Invalid value for hearingId");
+
+                if (participantId == Guid.Empty) ModelState.AddModelError("participantId", "Invalid value for participantId");
+
+                var requestValidation = new AddPreHearingChecklistRequestValidation();
+                requestValidation.Validate(request).AddTo(ModelState);
+
+                if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var mapper = new QuestionAnswerRequestToNewQuestionAnswerMapper();
+
+            var questionAnswerList = mapper.MapQuestionAnswerToResponse(request.QuestionAnswers);
+            var checkListCommand = new AddChecklistToParticipantCommand(hearingId, participantId, questionAnswerList);
+            await _commandHandler.Handle(checkListCommand);
+            
+                              return Created("", null);
+        }
+        
+
+
 
         private ChecklistsResponse MapChecklistsResponse(List<Participant> participants)
         {
