@@ -30,7 +30,8 @@ namespace Bookings.DAL.Queries
                 .Include("Participants.Person")
                 .Include("Participants.HearingRole.UserRole")
                 .Include("Participants.CaseRole")
-                .Include("Participants.ChecklistAnswers").ToListAsync();
+                .Include("Participants.ChecklistAnswers")
+                .Include("Participants.ChecklistAnswers.Question").ToListAsync();
 
             foreach(var hearing in hearings)
             {

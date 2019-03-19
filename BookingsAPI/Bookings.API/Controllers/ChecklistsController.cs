@@ -68,7 +68,7 @@ namespace Bookings.API.Controllers
                 return NotFound();
             }
 
-            var response = new PaginationBuilder<ChecklistsResponse, Participant>(MapChecklistsResponse)
+            var response = new PaginationBuilder<ChecklistsResponse, Participant>(new ChecklistToResponseMapper().MapChecklistToResponse)
                .ResourceUrl(ChecklistsEndpointBaseUrl + AllChecklistsEndpointUrl)
                .WithSourceItems(participants.AsQueryable())
                .PageSize(pageSize)
@@ -117,38 +117,6 @@ namespace Bookings.API.Controllers
             await _commandHandler.Handle(checkListCommand);
             
                               return Created("", null);
-        }
-        
-
-
-
-        private ChecklistsResponse MapChecklistsResponse(List<Participant> participants)
-        {
-            return new ChecklistsResponse
-            {
-                Checklists = participants.Select(MapParticipantChecklist).ToList()
-            };
-        }
-
-        private HearingParticipantCheckListResponse MapParticipantChecklist(Participant hearingParticipant)
-        {
-            var checklistAnswers = hearingParticipant.GetChecklistAnswers().OrderByDescending(c => c.CreatedAt).ToList();
-            var participant = hearingParticipant.Person;
-            var answers = new QuestionAnswerToResponseMapper().MapQuestionAnswerToResponse(checklistAnswers);
-
-            return new HearingParticipantCheckListResponse
-            {
-                Title = participant.Title,
-                FirstName = participant.FirstName,
-                LastName = participant.LastName,
-                Landline = participant.TelephoneNumber,
-                Role = hearingParticipant.HearingRole.UserRole.Name.ToString(),
-                //Mobile = participant.Mobile,
-                HearingId = hearingParticipant.HearingId,
-                ParticipantId = participant.Id,
-                CompletedDate = checklistAnswers.Max(answer => answer.CreatedAt),
-                QuestionAnswerResponses = answers
-            };
         }
     }
 }

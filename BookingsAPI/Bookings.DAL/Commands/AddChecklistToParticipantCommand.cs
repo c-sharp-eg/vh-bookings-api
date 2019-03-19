@@ -46,6 +46,11 @@ namespace Bookings.DAL.Commands
         {
             var hearing = await _context.VideoHearings
                 .Include("Participants.Person")
+                .Include("HearingCases.Case")
+                .Include(x => x.CaseType)
+                .ThenInclude(x => x.CaseRoles)
+                .ThenInclude(x => x.HearingRoles)
+                .ThenInclude(x => x.UserRole)
                 .SingleOrDefaultAsync(x => x.Id == command.HearingId);
 
             if (hearing == null)
@@ -74,7 +79,7 @@ namespace Bookings.DAL.Commands
                 throw new CheckListQuestionsForRoleNotFoundException(participant.HearingRole.UserRole.Name);
             }
 
-            var newChecklist = Checklist.New(participant, command.QuestionsForRole);
+            var newChecklist = Checklist.New(participant, checklistQuestionsForRole);
 
             foreach (var questionAnswer in command.QuestionAnswersList)
                 newChecklist.Answer(questionAnswer.QuestionKey, questionAnswer.Answer, questionAnswer.Notes);

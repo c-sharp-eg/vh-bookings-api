@@ -33,7 +33,7 @@ namespace Bookings.API.Mappings
                 //Mobile = participant.Mobile,
                 HearingId = hearingParticipant.HearingId,
                 ParticipantId = participant.Id,
-                CompletedDate = checklistAnswers.Max(answer => answer.CreatedAt),
+                CompletedDate = checklistAnswers.Any() ? checklistAnswers.Max(answer => answer.CreatedAt) : DateTime.MinValue,
                 QuestionAnswerResponses = answers
             };
         }
