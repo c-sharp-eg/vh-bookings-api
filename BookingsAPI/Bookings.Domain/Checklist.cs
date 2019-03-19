@@ -33,7 +33,7 @@ namespace Bookings.Domain
         /// </summary>
         public bool IsRequiredForHearing(Hearing hearing)
         {
-            var hearingIsPending = hearing.Status != HearingStatus.Closed &&
+            var hearingIsPending = hearing.Status != BookingStatus.Cancelled &&
                                    hearing.ScheduledDateTime >= DateTime.UtcNow.Date;
 
             return _questions.Any() && !IsSubmitted && hearingIsPending;
