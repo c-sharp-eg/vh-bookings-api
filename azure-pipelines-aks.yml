@@ -53,6 +53,10 @@ stages:
       inputs:
         artifactName: 'WebApp'
 
+    - task: ExtractFiles@1
+      inputs:
+        destinationFolder: './WebAppBin'
+
     - task: DownloadSecureFile@1
       inputs:
         secureFile: 'vh_kube_dev_helm.key.pem'
