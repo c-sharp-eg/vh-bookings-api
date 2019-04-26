@@ -49,7 +49,7 @@ stages:
   - job: buildImage
     steps:
 
-    - task: DownloadPipelineArtifact@0
+    - task: DownloadPipelineArtifact@1
       inputs:
         artifactName: 'WebAPP'
         targetPath: ./WebAPP'
