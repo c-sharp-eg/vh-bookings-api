@@ -45,7 +45,7 @@ stages:
         keyVaultName: $(keyVaultName)
         secretsFilter: $(secretsFilter)
 
-- stage: Build
+- stage: BuildImage
   jobs:
   - task: DownloadSecureFile@1
     inputs:
