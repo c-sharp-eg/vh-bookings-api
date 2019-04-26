@@ -48,6 +48,12 @@ stages:
   jobs:
   - job: buildImage
     steps:
+
+    - task: DownloadPipelineArtifact@0
+      inputs:
+        artifactName: 'WebAPP'
+        targetPath: $(System.DefaultWorkingDirectory)
+
     - task: DownloadSecureFile@1
       inputs:
         secureFile: 'vh_kube_dev_helm.key.pem'
