@@ -65,40 +65,15 @@ stages:
       inputs:
         secureFile: 'vh_kube_dev_ca.cert.pem'
 
-    - task: Docker@1
-      displayName: Build image
+    - task: Docker@2
+      displayName: buildAndPush
       inputs:
-        command: Build an image
-        azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
-        azureContainerRegistry: $(azureContainerRegistry)
-        dockerFile: Dockerfile
-        imageName: $(Build.Repository.Name)
-
-    - task: Docker@1
-      displayName: Tag image
-      inputs:
-        command: Tag image
-        azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
-        azureContainerRegistry: $(azureContainerRegistry)
-        imageName: $(azureContainerRegistry)/$(Build.Repository.Name):latest
-        arguments: $(azureContainerRegistry)/$(Build.Repository.Name):$(Build.BuildId)
-
-    - task: Docker@1
-      displayName: 'Push an image'
-      inputs:
-        azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
-        azureContainerRegistry: $(azureContainerRegistry)
-        command: Push an image
-        imageName: $(azureContainerRegistry)/$(Build.Repository.Name):$(Build.BuildId)
-
-    - task: Docker@1
-      displayName: 'Push an image'
-      inputs:
-        azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
-        azureContainerRegistry: $(azureContainerRegistry)
-        command: Push an image
-        imageName: $(azureContainerRegistry)/$(Build.Repository.Name):latest
-
+        containerRegistry: '$(azureContainerRegistry)'
+        repository: something2
+        Dockerfile: Dockerfile
+        tags: |
+          $(Build.BuildId)
+          lates
 
     - task: HelmInstaller@0
       displayName: 'Install Helm $(helmVersion)'
