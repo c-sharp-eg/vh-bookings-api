@@ -49,10 +49,9 @@ stages:
   - job: buildImage
     steps:
 
-    - task: DownloadPipelineArtifact@1
+    - task: DownloadBuildArtifacts@0
       inputs:
-        artifactName: 'WebAPP'
-        targetPath: './WebAPP'
+        artifactName: 'WebApp'
 
     - task: DownloadSecureFile@1
       inputs:
