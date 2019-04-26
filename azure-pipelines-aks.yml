@@ -52,7 +52,7 @@ stages:
     - task: DownloadPipelineArtifact@0
       inputs:
         artifactName: 'WebAPP'
-        targetPath: $(System.DefaultWorkingDirectory)
+        targetPath: ./WebAPP'
 
     - task: DownloadSecureFile@1
       inputs:
