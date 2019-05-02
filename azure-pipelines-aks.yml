@@ -45,7 +45,7 @@ stages:
         keyVaultName: $(keyVaultName)
         secretsFilter: $(secretsFilter)
 
-  - job:
+  - job: BuildDotNetCoreProject
     displayName: .Net Core Project
     pool: 'Azure-VSTS-VS2017'
     steps:
@@ -64,6 +64,7 @@ stages:
 
   - job:
     displayName: Docker Image
+    dependsOn: BuildDotNetCoreProject
     pool:
       vmImage: ubuntu-16.04
     steps:
