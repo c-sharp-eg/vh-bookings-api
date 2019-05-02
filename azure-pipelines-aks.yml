@@ -46,6 +46,7 @@ stages:
         secretsFilter: $(secretsFilter)
 
   - job:
+    displayName: Build Docker image
     pool: 'Azure-VSTS-VS2017'
     steps:
     # Runs common steps - gitVersion, Nuget  
