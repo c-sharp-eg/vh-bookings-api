@@ -75,12 +75,27 @@ stages:
         downloadPath: '$(System.ArtifactsDirectory)/webapp'
         parallelizationLimit: 50
 
+
+
+    - task: Docker@2
+      displayName: build
+      inputs:
+        containerRegistry: 'vh-acr-dev'
+        repository: '$(Build.Repository.Name)'
+        command: build
+        Dockerfile: Dockerfile
+        arguments: '--build-arg $SourcePath="$(Build.SourcesDirectory)/webapp" '
+        tags: |
+          $(Build.BuildId)
+          latest
+
     - task: Docker@2
       displayName: buildAndPush
       inputs:
         containerRegistry: 'vh-acr-dev'
-        repository: 'hmcts/vh-dotnet-core-docker '
+        repository: '$(Build.Repository.Name)'
         Dockerfile: Dockerfile
+        arguments: --build-arg $SourcePath="$(Build.SourcesDirectory)/webapp" 
         tags: |
          $(Build.BuildId)
          latest
