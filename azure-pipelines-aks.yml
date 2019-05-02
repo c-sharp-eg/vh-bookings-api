@@ -35,7 +35,6 @@ resources:
 stages:
 - stage: Build
   jobs:
-  - job:
   - template: jobs/angularDotNetCore.yml@azureDevOpsTemplates # Template reference
     parameters:
         sonarCloudExtraProperties: $(sonarCloudExtraProperties)
@@ -45,6 +44,10 @@ stages:
         dalWorkingDirectory: $(dalWorkingDirectory)
         keyVaultName: $(keyVaultName)
         secretsFilter: $(secretsFilter)
+  - template: templates/dotnetRid/dotnetRidRestoreBuildPublish.yml@azureDevOpsTemplates # Template reference
+    parameters:
+        apiDirectory: $(apiDirectory)
+        runtimeIdentifier: $(runtimeIdentifier)
 
 
 - stage: Build2
