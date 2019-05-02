@@ -45,7 +45,7 @@ stages:
         keyVaultName: $(keyVaultName)
         secretsFilter: $(secretsFilter)
 
-  - job:
+  - job: 'Build targeting $(runtimeIdentifier)'
     steps:
     - template: templates/dotnetRid/dotnetRidRestoreBuildPublish.yml@azureDevOpsTemplates # Template reference
       parameters:
