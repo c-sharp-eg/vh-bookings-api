@@ -35,6 +35,7 @@ resources:
 stages:
 - stage: Build
   jobs:
+  - job:
   - template: jobs/angularDotNetCore.yml@azureDevOpsTemplates # Template reference
     parameters:
         sonarCloudExtraProperties: $(sonarCloudExtraProperties)
