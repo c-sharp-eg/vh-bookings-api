@@ -46,6 +46,15 @@ stages:
         secretsFilter: $(secretsFilter)
 
 
+- stage: Build2
+  jobs:
+  - job:
+    pool: Azure-VSTS-VS2017
+    steps:
+    - template: templates/dotnetRid/dotnetRidRestoreBuildPublish.yml@azureDevOpsTemplates # Template reference
+      parameters:
+          apiDirectory: $(apiDirectory)
+          runtimeIdentifier: $(runtimeIdentifier)
 
 - stage: BuildImage
   jobs:
