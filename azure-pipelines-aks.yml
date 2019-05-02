@@ -46,7 +46,7 @@ stages:
         secretsFilter: $(secretsFilter)
 
   - job: BuildDotNetCoreProject
-    displayName: .Net Core Project
+    displayName: .Net Core Project for $(runtimeIdentifier)
     pool: 'Azure-VSTS-VS2017'
     steps:
     # Runs common steps - gitVersion, Nuget  
@@ -72,5 +72,5 @@ stages:
       displayName: 'Download Build Artifacts'
       inputs:
         artifactName: 'dotentArtifacts'
-        downloadPath: '$(System.ArtifactsDirectory)\webapp'
+        downloadPath: '$(System.ArtifactsDirectory)/webapp'
         parallelizationLimit: 50
