@@ -81,6 +81,7 @@ stages:
         containerRegistry: 'vh-acr-dev'
         repository: 'hmcts/vh-dotnet-core-docker '
         Dockerfile: Dockerfile
+        arguments: --build-arg $SourcePath="$(Build.SourcesDirectory)/webapp" 
         tags: |
          $(Build.BuildId)
          latest
