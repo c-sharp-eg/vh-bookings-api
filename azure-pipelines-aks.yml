@@ -45,8 +45,8 @@ stages:
         keyVaultName: $(keyVaultName)
         secretsFilter: $(secretsFilter)
 
-  - job: 'Build targeting platform'
-    steps:
+  - job:
+    steps: 'Build targeting platform'
     - template: templates/dotnetRid/dotnetRidRestoreBuildPublish.yml@azureDevOpsTemplates # Template reference
       parameters:
           apiDirectory: $(apiDirectory)
