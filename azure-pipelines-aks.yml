@@ -47,8 +47,8 @@ stages:
 
 - stage: Build
   jobs:
+  pool: Azure-VSTS-VS2017
   - template: templates/dotnetRid/dotnetRidRestoreBuildPublish.yml@azureDevOpsTemplates # Template reference
-    pool: Azure-VSTS-VS2017
     parameters:
         apiDirectory: $(apiDirectory)
         runtimeIdentifier: $(runtimeIdentifier)
