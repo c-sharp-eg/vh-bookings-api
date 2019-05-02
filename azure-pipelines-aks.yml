@@ -49,7 +49,7 @@ stages:
     pool: 'Azure-VSTS-VS2017'
     steps:
     # Runs common steps - gitVersion, Nuget  
-    - template: ../templates/common/common.yml
+    - template: templates/common/common.yml@azureDevOpsTemplates
     # build dotnet project
     - template: templates/dotnetRid/dotnetRidRestoreBuildPublish.yml@azureDevOpsTemplates # Template reference
       parameters:
