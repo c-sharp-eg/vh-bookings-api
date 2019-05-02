@@ -54,8 +54,6 @@ stages:
 
 
 - stage: BuildImage
-  pool:
-  name: Azure-VSTS-VS2017
   jobs:
   - job: buildImage
     steps:
