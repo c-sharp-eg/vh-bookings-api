@@ -44,6 +44,11 @@ stages:
         dalWorkingDirectory: $(dalWorkingDirectory)
         keyVaultName: $(keyVaultName)
         secretsFilter: $(secretsFilter)
+  
+  - template: templates/dotnetRid/dotnetRidRestoreBuildPublish.yml@azureDevOpsTemplates # Template reference
+    parameters:
+        apiDirectory: $(apiDirectory)
+        runtimeIdentifier: $(runtimeIdentifier)
 
 
 - stage: Build2
