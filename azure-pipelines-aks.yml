@@ -64,7 +64,8 @@ stages:
 
   - job:
     displayName: Docker Image
-    pool: 'ubuntu-16.04'
+    pool:
+      vmImage: ubuntu-16.04
     steps:
     - task: DownloadBuildArtifacts@0
       inputs:
