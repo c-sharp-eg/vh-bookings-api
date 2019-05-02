@@ -46,7 +46,7 @@ stages:
         secretsFilter: $(secretsFilter)
 
   - job:
-    Pool: Azure-VSTS-VS2017
+    pool: 'Azure-VSTS-VS2017'
     steps: 
     - template: templates/dotnetRid/dotnetRidRestoreBuildPublish.yml@azureDevOpsTemplates # Template reference
       parameters:
