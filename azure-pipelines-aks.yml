@@ -45,21 +45,12 @@ stages:
         keyVaultName: $(keyVaultName)
         secretsFilter: $(secretsFilter)
 
-- stage: Build
-  jobs:
-  pool: Azure-VSTS-VS2017
-  steps:
-  - template: templates/dotnetRid/dotnetRidRestoreBuildPublish.yml@azureDevOpsTemplates # Template reference
-    parameters:
-        apiDirectory: $(apiDirectory)
-        runtimeIdentifier: $(runtimeIdentifier)
 
 
 - stage: BuildImage
   jobs:
   - job: buildImage
     steps:
-
     - task: DownloadBuildArtifacts@0
       inputs:
         artifactName: 'WebApp'
