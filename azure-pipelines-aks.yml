@@ -46,7 +46,7 @@ stages:
         secretsFilter: $(secretsFilter)
 
   - job:
-    displayName: Docker image
+    displayName: .Net Core Project
     pool: 'Azure-VSTS-VS2017'
     steps:
     # Runs common steps - gitVersion, Nuget  
@@ -56,3 +56,8 @@ stages:
       parameters:
           apiDirectory: $(apiDirectory)
           runtimeIdentifier: $(runtimeIdentifier)
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        artifactName: dotentArtifacts
