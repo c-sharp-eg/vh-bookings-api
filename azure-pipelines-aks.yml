@@ -20,6 +20,7 @@ variables:
   azureSubscriptionEndpoint: 'Reform-CFT-VH-Dev'
   azureContainerRegistry: 'vhinfrastructure.azurecr.io'
   helmVersion: '2.12.3'
+  runtimeIdentifier: 'win-x64'
 
 
 # GitHub Repo that conatins build templates. Reference https://docs.microsoft.com/en-us/azure/devops/pipelines/process/templates?view=vsts#using-other-repositories
@@ -44,7 +45,17 @@ stages:
         keyVaultName: $(keyVaultName)
         secretsFilter: $(secretsFilter)
 
+- stage: Build
+  jobs:
+  - template: templates/dotnetRid/dotnetRidRestoreBuildPublish.yml@azureDevOpsTemplates # Template reference
+    parameters:
+        apiDirectory: $(apiDirectory)
+        runtimeIdentifier: $(runtimeIdentifier)
+
+
 - stage: BuildImage
+  pool:
+  name: Azure-VSTS-VS2017
   jobs:
   - job: buildImage
     steps:
