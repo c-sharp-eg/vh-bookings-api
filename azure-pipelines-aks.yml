@@ -74,3 +74,13 @@ stages:
         artifactName: 'dotentArtifacts'
         downloadPath: '$(System.ArtifactsDirectory)/webapp'
         parallelizationLimit: 50
+
+    - task: Docker@2
+      displayName: buildAndPush
+      inputs:
+        containerRegistry: 'vh-acr-dev'
+        repository: 'hmcts/vh-dotnet-core-docker '
+        Dockerfile: Dockerfile
+        tags: |
+         $(Build.BuildId)
+         latest
