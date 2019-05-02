@@ -61,3 +61,11 @@ stages:
       inputs:
         pathtoPublish: '$(Build.ArtifactStagingDirectory)'
         artifactName: dotentArtifacts
+
+  - job:
+    displayName: Docker Image
+    pool: 'ubuntu-16.04'
+    steps:
+    - task: DownloadBuildArtifacts@0
+      inputs:
+        artifactName: 'dotentArtifacts'
