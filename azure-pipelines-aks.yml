@@ -83,7 +83,7 @@ stages:
         repository: '$(Build.Repository.Name)'
         command: build
         Dockerfile: Dockerfile
-        arguments: '--build-arg SourcePath="./webapp" '
+        arguments: '--build-arg SourcePath=$(Build.SourcesDirectory)/webapp'
         tags: |
           $(Build.BuildId)
           latest
