@@ -76,17 +76,8 @@ stages:
         downloadPath: '$(Build.SourcesDirectory)/webapp'
         parallelizationLimit: 50
 
-    - task: Docker@1
-      displayName: Build image
-      inputs:
-        command: Build an image
-        azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
-        azureContainerRegistry: $(azureContainerRegistry)
-        dockerFile: Dockerfile
-        imageName: $(Build.Repository.Name)
-
     - task: Docker@2
-      displayName: build
+      displayName: Build
       inputs:
         containerRegistry: 'vh-acr-dev'
         repository: '$(Build.Repository.Name)'
