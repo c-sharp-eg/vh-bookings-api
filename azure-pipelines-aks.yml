@@ -79,26 +79,26 @@ stages:
     - powershell: (Get-ChildItem -Recurse -Path "$(Build.SourcesDirectory)/webapp").FullName
 
     
-    - task: Docker@1
-      displayName: Build image
-      inputs:
-        command: Build an image
-        azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
-        azureContainerRegistry: $(azureContainerRegistry)
-        dockerFile: Dockerfile
-        imageName: $(Build.Repository.Name)
-
-    # - task: Docker@2
-    #   displayName: Build
+    # - task: Docker@1
+    #   displayName: Build image
     #   inputs:
-    #     containerRegistry: 'vh-acr-dev'
-    #     repository: '$(Build.Repository.Name)'
-    #     command: build
-    #     Dockerfile: Dockerfile
-    #     arguments: '--build-arg SourcePath="$(Build.SourcesDirectory)/webapp"'
-    #     tags: |
-    #       $(Build.BuildId)
-    #       latest
+    #     command: Build an image
+    #     azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    #     azureContainerRegistry: $(azureContainerRegistry)
+    #     dockerFile: Dockerfile
+    #     imageName: $(Build.Repository.Name)
+
+    - task: Docker@2
+      displayName: Build
+      inputs:
+        containerRegistry: 'vh-acr-dev'
+        repository: '$(Build.Repository.Name)'
+        command: build
+        Dockerfile: Dockerfile
+        arguments: '--build-arg SourcePath="$(Build.SourcesDirectory)/webapp"'
+        tags: |
+          $(Build.BuildId)
+          latest
 
     - task: Docker@2
       displayName: Push
