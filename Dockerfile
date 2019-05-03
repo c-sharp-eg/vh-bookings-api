@@ -7,7 +7,7 @@ EXPOSE 443
  
 ARG SourcePath
  
-COPY ./webapp ./
+COPY ./webapp/ ./
  
 ENV ASPNETCORE_ENVIRONMENT Development
  
