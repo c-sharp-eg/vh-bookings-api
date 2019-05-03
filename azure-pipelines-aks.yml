@@ -81,7 +81,7 @@ stages:
       inputs:
         containerRegistry: 'vh-acr-dev'
         repository: '$(Build.Repository.Name)'
-        command: Dockerfile
+        command: buildAndPush
         Dockerfile: Dockerfile
         tags: |
           $(Build.BuildId)
