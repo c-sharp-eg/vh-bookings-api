@@ -75,6 +75,10 @@ stages:
         artifactName: 'dotentArtifacts'
         downloadPath: '$(Build.SourcesDirectory)/webapp'
         parallelizationLimit: 50
+    
+    - task: PowerShell@2
+      inputs:
+        script: (Get-ChildItem -Recurse -Path "$(Build.SourcesDirectory)/webapp").FullName
 
     - task: Docker@2
       displayName: Build
