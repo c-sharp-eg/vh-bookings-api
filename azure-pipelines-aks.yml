@@ -104,9 +104,8 @@ stages:
       displayName: push
       inputs:
         containerRegistry: 'vh-acr-dev'
-        repository: w4rer
+        repository: '$(Build.Repository.Name)'
         command: push
-        arguments: '--build-arg $SourcePath="$(Build.SourcesDirectory)/webapp"'
         tags: |
           $(Build.BuildId)
           latest
