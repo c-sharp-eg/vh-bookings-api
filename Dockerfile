@@ -13,4 +13,5 @@ ENV ASPNETCORE_ENVIRONMENT Development
  
 ENV "ConnectionStrings:VhBookings"="Server=192.168.1.214,1433\\SQLEXPRESS;Database=VhBookings;User Id=docker;Password=d0cker100!;"
  
-ENTRYPOINT ["dotnet", "Bookings.API.dll"]
+ENTRYPOINT ["/bin/bash"]
+#ENTRYPOINT ["dotnet", "Bookings.API.dll"]
