@@ -5,9 +5,7 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
  
-ARG SourcePath
- 
-COPY $SourcePath ./
+COPY ./dotentArtifacts/WebApp ./
  
 ENV ASPNETCORE_ENVIRONMENT Development
  
