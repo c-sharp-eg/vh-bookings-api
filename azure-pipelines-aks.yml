@@ -101,11 +101,12 @@ stages:
           latest
 
     - task: Docker@2
-      displayName: Push
+      displayName: push
       inputs:
         containerRegistry: 'vh-acr-dev'
-        repository: '$(Build.Repository.Name)'
-        Dockerfile: Dockerfile
+        repository: w4rer
+        command: push
+        arguments: '--build-arg $SourcePath="$(Build.SourcesDirectory)/webapp"'
         tags: |
-         $(Build.BuildId)
-         latest
+          $(Build.BuildId)
+          latest
