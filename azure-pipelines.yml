@@ -101,3 +101,42 @@ stages:
                     "ConnectionStrings/VhBookings":"$(VhBookingsDatabaseConnectionString)"
                 }
 
+          - task: AzureRmWebAppDeployment@3
+            displayName: 'Azure App Service Deploy'
+            inputs:
+              azureSubscription: 'Reform-CFT-VH-Dev'
+              WebAppName: '$(ProjectName)-preview'
+              Package: '$(System.DefaultWorkingDirectory)/**/**/*.zip'
+              AppSettings: '$(AppSettings)'
+              TakeAppOfflineFlag: true
+              UseWebDeploy: true
+              RemoveAdditionalFilesFlag: true
+              RenameFilesFlag: true
+              JSONFiles: '**/appsettings.json'
+
+          - task: sergeyzwezdin.magic-chunks.magic.chunks.MagicChunks@2
+            displayName: 'Transform AC appsettings'
+            inputs:
+              sourcePath: '**/AcceptanceTests/*/appsettings.json'
+              transformations: |
+                {
+                    "AcceptanceTestSettings/BookingsApiBaseUrl":"$(AppUri)",
+                    "AzureAd/TenantId":"$(tenantid)",
+                    "AzureAd/VhBookingsApiResourceId":"$(vh-bookings-api-identifieruris)",
+                    "Testing/TestClientId":"$(vh-admin-web-appid)",
+                    "Testing/TestClientSecret":"$(vh-admin-web-key)"
+                }
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Run Acceptance Tests'
+            inputs:
+              command: custom
+              custom: vstest
+              arguments: '$(System.DefaultWorkingDirectory)/_hmcts.vh-bookings-api/AcceptanceTests/netcoreapp2.2/Bookings.AcceptanceTests.dll /logger:trx '
+
+          - task: PublishTestResults@2
+            displayName: 'Publish test results'
+            inputs:
+              testResultsFormat: VSTest
+              testResultsFiles: 'TestResults/*.trx'
+            condition: succeededOrFailed()
