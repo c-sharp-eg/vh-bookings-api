@@ -24,11 +24,12 @@ resources:
   - repository: azureDevOpsTemplates
     type: github
     name: hmcts/azure-devops-templates
-    ref: refs/heads/master # ref name to use, defaults to 'refs/heads/master'
+    ref: refs/heads/multistage-yaml-pipelien-fix # ref name to use, defaults to 'refs/heads/master'
     endpoint: 'GitHubDevOps'
 
 trigger:
 - master
+- multistage-yaml-pipelien
 pr:
 - master
 
@@ -50,13 +51,21 @@ stages:
   displayName: Deploy stage
   jobs:
   - deployment: deploy
-    displayName: Deploy job
+    displayName: Deploy Preview
     environment: 'Preview'
     strategy:
       runOnce:
         deploy:
           steps:
           - task: DotNetCoreInstaller@0
-          displayName: 'Use .NET Core sdk 2.2.104'
-          inputs:
-            version: 2.2.104
+            displayName: 'Use .NET Core sdk 2.2.104'
+            inputs:
+              version: 2.2.104
+
+          - powershell: |
+              $LowerEnvironmentName = "$(Release.EnvironmentName)".ToLower()
+              Write-Output ("##vso[task.setvariable variable=Release.EnvironmentName;]$LowerEnvironmentName")
+              
+              Write-Host "Release.EnvironmentName variable updates"
+            displayName: 'Set Environment Variables to lower case'
+
