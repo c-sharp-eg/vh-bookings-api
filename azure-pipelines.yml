@@ -32,14 +32,31 @@ trigger:
 pr:
 - master
 
-jobs:
-  
-- template: jobs/angularDotNetCore.yml@azureDevOpsTemplates # Template reference
-  parameters:
-    sonarCloudExtraProperties: $(sonarCloudExtraProperties)
-    integrationTestsAppSettingsTransform: $(integrationTestsAppSettingsTransform)
-    coverletCoverageExclusions: $(coverletCoverageExclusions)
-    apiDirectory: $(apiDirectory)
-    dalWorkingDirectory: $(dalWorkingDirectory)
-    keyVaultName: $(keyVaultName)
-    secretsFilter: $(secretsFilter)
+stages:
+- stage: Build
+  displayName: Build stage
+  jobs:
+  - template: jobs/angularDotNetCore.yml@azureDevOpsTemplates # Template reference
+    parameters:
+        sonarCloudExtraProperties: $(sonarCloudExtraProperties)
+        integrationTestsAppSettingsTransform: $(integrationTestsAppSettingsTransform)
+        coverletCoverageExclusions: $(coverletCoverageExclusions)
+        apiDirectory: $(apiDirectory)
+        dalWorkingDirectory: $(dalWorkingDirectory)
+        keyVaultName: $(keyVaultName)
+        secretsFilter: $(secretsFilter)
+
+- stage: Deploy
+  displayName: Deploy stage
+  jobs:
+  - deployment: deploy
+    displayName: Deploy job
+    environment: 'Preview'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: DotNetCoreInstaller@0
+          displayName: 'Use .NET Core sdk 2.2.104'
+          inputs:
+            version: 2.2.104
