@@ -118,6 +118,9 @@ stages:
         kubernetesServiceEndpoint: 'vh-kub-dev'
         namespace: default
         command: apply
+        useConfigurationFile: true
+        configuration: secret.yaml
+        arguments: '-f'
         secretType: generic
         secretArguments: '--from-literal=key1=value1 --from-literal=key2="top secret"'
 
