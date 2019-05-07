@@ -91,4 +91,13 @@ stages:
               KeyVaultName: '$(VHAzureKeyVaultNameHTCore)'
               SecretsFilter: '$(ReadKeyVaultSecrets)'
 
+          - task: sergeyzwezdin.magic-chunks.magic.chunks.MagicChunks@2
+            displayName: 'Transform DAL appsettings'
+            inputs:
+              sourcePath: '**/DalProject/*/appsettings.json'
+              sourcePathRecurse: true
+              transformations: |
+                {
+                    "ConnectionStrings/VhBookings":"$(VhBookingsDatabaseConnectionString)"
+                }
 
