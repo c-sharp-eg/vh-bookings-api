@@ -113,13 +113,12 @@ stages:
         checkLatestHelmVersion: false
 
     - task: Kubernetes@1
+      displayName: 'kubectl apply'
       inputs:
-        kubernetesServiceEndpoint: 'a993ee82-40e5-4d87-a6f1-75f0a0458016'
-        namespace: 'default'
-        command: 'apply'
-        configuration: 'file-path'
-        arguments: 'file-path-arg'
-        secretType: 'generic'
+        kubernetesServiceEndpoint: 'vh-kub-dev'
+        namespace: default
+        command: apply
+        secretType: generic
         secretArguments: '--from-literal=key1=value1 --from-literal=key2="top secret"'
 
     - task: HelmDeploy@0
