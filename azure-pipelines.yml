@@ -59,8 +59,8 @@ stages:
 - stage: Deploy
   displayName: Deploy stage
   jobs:
-  - deployment: deploy
-    displayName: Deploy Preview
+  - deployment: deployPreview
+    displayName: Preview
     environment: 'Preview'
     strategy:
       runOnce:
@@ -115,7 +115,7 @@ stages:
               RenameFilesFlag: true
               JSONFiles: '**/appsettings.json'
 
-          - task: sergeyzwezdin.magic-chunks.magic.chunks.MagicChunks@2
+          - task: MagicChunks@2
             displayName: 'Transform AC appsettings'
             inputs:
               sourcePath: '**/AcceptanceTests/*/appsettings.json'
