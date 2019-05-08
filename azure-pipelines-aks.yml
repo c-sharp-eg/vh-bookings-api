@@ -77,15 +77,38 @@ stages:
         parallelizationLimit: 50
 
     - task: Docker@2
-      displayName: Build
+      displayName: build
       inputs:
         containerRegistry: 'vh-acr-dev'
         repository: '$(Build.Repository.Name)'
-        command: buildAndPush
+        command: build
         Dockerfile: Dockerfile
         tags: |
           $(Build.BuildId)
           latest
+        arguments: '--build-arg ConnectionStrings:VhBookings=$(ConnectionStrings:VhBookings)'
+
+    - task: Docker@2
+      displayName: build
+      inputs:
+        containerRegistry: 'vh-acr-dev'
+        repository: '$(Build.Repository.Name)'
+        command: push
+        tags: |
+          $(Build.BuildId)
+          latest
+
+
+    # - task: Docker@2
+    #   displayName: Build
+    #   inputs:
+    #     containerRegistry: 'vh-acr-dev'
+    #     repository: '$(Build.Repository.Name)'
+    #     command: buildAndPush
+    #     Dockerfile: Dockerfile
+    #     tags: |
+    #       $(Build.BuildId)
+    #       latest
 
   - job: Deploy
     displayName: Deploy
@@ -112,17 +135,17 @@ stages:
         helmVersion: $(helmVersion)
         checkLatestHelmVersion: false
 
-    - task: Kubernetes@1
-      displayName: 'kubectl apply'
-      inputs:
-        kubernetesServiceEndpoint: 'vh-kub-dev'
-        namespace: default
-        command: apply
-        useConfigurationFile: true
-        configuration: secret.yaml
-        arguments: '-f'
-        secretType: generic
-        secretArguments: '--from-literal=key1=value1 --from-literal=key2="top secret"'
+    # - task: Kubernetes@1
+    #   displayName: 'kubectl apply'
+    #   inputs:
+    #     kubernetesServiceEndpoint: 'vh-kub-dev'
+    #     namespace: default
+    #     command: apply
+    #     useConfigurationFile: true
+    #     configuration: secret.yaml
+    #     arguments: '-f'
+    #     secretType: generic
+    #     secretArguments: '--from-literal=key1=value1 --from-literal=key2="top secret"'
 
     - task: HelmDeploy@0
       inputs:
