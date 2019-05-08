@@ -44,6 +44,7 @@ stages:
         dalWorkingDirectory: $(dalWorkingDirectory)
         keyVaultName: $(keyVaultName)
         secretsFilter: $(secretsFilter)
+        cleanCheckout: 'true'
 
   - job: BuildDotNetCoreProject
     displayName: .Net Core Project for $(runtimeIdentifier)
