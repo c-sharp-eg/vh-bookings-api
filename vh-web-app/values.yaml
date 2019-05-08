@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: vhinfrastructure.azurecr.io/hmcts/vh-dotnet-core-docker
+  repository: vhinfrastructure.azurecr.io/hmcts/vh-bookings-api
   tag: latest
   pullPolicy: IfNotPresent
 
