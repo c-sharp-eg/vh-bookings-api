@@ -47,6 +47,8 @@ stages:
         cleanCheckout: 'true'
 
   - job: BuildDotNetCoreProject
+    workspace:
+    clean: all
     displayName: .Net Core Project for $(runtimeIdentifier)
     pool: 'Azure-VSTS-VS2017'
     steps:
