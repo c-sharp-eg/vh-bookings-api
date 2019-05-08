@@ -7,10 +7,10 @@ EXPOSE 443
  
 COPY ./dotentArtifacts/WebApp ./
 
-ARG ConnectionStrings:VhBookings="Server=192.168.1.214,1433\\SQLEXPRESS;Database=VhBookings;User Id=docker;Password=d0cker100!;"
+ARG ConnectionStringsVhBookings
  
 ENV ASPNETCORE_ENVIRONMENT Development
  
-ENV "ConnectionStrings:VhBookings"="$ConnectionStrings:VhBookings"
+ENV ConnectionStrings:VhBookings=$ConnectionStringsVhBookings
 
 ENTRYPOINT ["dotnet", "Bookings.API.dll"]

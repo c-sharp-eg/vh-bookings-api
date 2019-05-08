@@ -86,7 +86,7 @@ stages:
         tags: |
           $(Build.BuildId)
           latest
-        arguments: '--build-arg ConnectionStrings:VhBookings=$(ConnectionStrings:VhBookings)'
+        arguments: '--build-arg ConnectionStringsVhBookings=$(ConnectionStrings:VhBookings)'
 
     - task: Docker@2
       displayName: build
