@@ -20,7 +20,7 @@ variables:
   azureSubscriptionEndpoint: 'Reform-CFT-VH-Dev'
   azureContainerRegistry: 'vhinfrastructure.azurecr.io'
   helmVersion: '2.12.3'
-  runtimeIdentifier: 'ubuntu.16.04-x64'
+  #runtimeIdentifier: 'ubuntu.16.04-x64'
 
 
 # GitHub Repo that conatins build templates. Reference https://docs.microsoft.com/en-us/azure/devops/pipelines/process/templates?view=vsts#using-other-repositories
