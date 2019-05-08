@@ -83,13 +83,13 @@ stages:
         repository: '$(Build.Repository.Name)'
         command: build
         Dockerfile: Dockerfile
+        arguments: '--build-arg ConnectionStringsVhBookings=$(ConnectionStrings:VhBookings)'
         tags: |
           $(Build.BuildId)
           latest
-        arguments: '--build-arg ConnectionStringsVhBookings=$(ConnectionStrings:VhBookings)'
 
     - task: Docker@2
-      displayName: build
+      displayName: push
       inputs:
         containerRegistry: 'vh-acr-dev'
         repository: '$(Build.Repository.Name)'
