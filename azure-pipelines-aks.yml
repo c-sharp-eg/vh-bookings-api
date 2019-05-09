@@ -101,7 +101,6 @@ stages:
           $(Build.BuildId)
           latest
 
-
     # - task: Docker@2
     #   displayName: Build
     #   inputs:
