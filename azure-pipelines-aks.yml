@@ -20,7 +20,7 @@ variables:
   azureSubscriptionEndpoint: 'Reform-CFT-VH-Dev'
   azureContainerRegistry: 'vhinfrastructure.azurecr.io'
   helmVersion: '2.12.3'
-  runtimeIdentifier: 'ubuntu.16.04-x64'
+  runtimeId: 'ubuntu.16.04-x64' # possible values linux-x64, win-x64, win10-x64
 
 
 # GitHub Repo that conatins build templates. Reference https://docs.microsoft.com/en-us/azure/devops/pipelines/process/templates?view=vsts#using-other-repositories
@@ -49,7 +49,7 @@ stages:
   - job: BuildDotNetCoreProject
     workspace:
       clean: all
-    displayName: .Net Core Project for $(runtimeIdentifier)
+    displayName: .Net Core Project for $(runtimeId)
     pool: 'Azure-VSTS-VS2017'
     steps:
     # Runs common steps - gitVersion, Nuget  
@@ -58,7 +58,7 @@ stages:
     - template: templates/dotnetRid/dotnetRidRestoreBuildPublish.yml@azureDevOpsTemplates # Template reference
       parameters:
           apiDirectory: $(apiDirectory)
-          runtimeIdentifier: $(runtimeIdentifier)
+          runtimeId: $(runtimeId)
 
     - task: PublishBuildArtifacts@1
       inputs:
