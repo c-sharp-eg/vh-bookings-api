@@ -6,25 +6,24 @@ replicaCount: 1
 
 image:
   repository: vhinfrastructure.azurecr.io/hmcts/vh-bookings-api
-  tag: latest
   pullPolicy: Always
 
 nameOverride: ""
 fullnameOverride: ""
 
 service:
-  type: LoadBalancer
+  type: ClusterIP
   port: 443
 
 ingress:
   enabled: true
-  annotations: {
-        kubernetes.io/ingress.class: traefik
-  }
+  annotations:
+    kubernetes.io/ingress.class: traefik
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: chart-example.local
-      paths: []
+      paths:
+        - /
 
   tls: []
   #  - secretName: chart-example-tls
