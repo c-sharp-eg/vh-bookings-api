@@ -101,17 +101,6 @@ stages:
           $(Build.BuildId)
           latest
 
-    # - task: Docker@2
-    #   displayName: Build
-    #   inputs:
-    #     containerRegistry: 'vh-acr-dev'
-    #     repository: '$(Build.Repository.Name)'
-    #     command: buildAndPush
-    #     Dockerfile: Dockerfile
-    #     tags: |
-    #       $(Build.BuildId)
-    #       latest
-
   - job: Deploy
     displayName: Deploy
     dependsOn: BuildDockerImage
