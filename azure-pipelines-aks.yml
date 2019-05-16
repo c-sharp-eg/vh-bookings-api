@@ -153,3 +153,4 @@ stages:
         waitForExecution: false
         releaseName: 'vh-web-app'
         force: true
+        recreate: true
