@@ -97,6 +97,7 @@ stages:
         containerRegistry: 'vh-acr-dev'
         repository: '$(Build.Repository.Name)'
         command: push
+        Dockerfile: Dockerfile
         tags: |
           $(Build.BuildId)
           latest
