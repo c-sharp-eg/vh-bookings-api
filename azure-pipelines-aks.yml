@@ -152,3 +152,4 @@ stages:
         privatekey: 'vh_kube_dev_helm.key.pem'
         waitForExecution: false
         releaseName: 'vh-web-app'
+        force: true
