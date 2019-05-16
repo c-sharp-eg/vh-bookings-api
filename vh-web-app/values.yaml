@@ -7,13 +7,14 @@ replicaCount: 1
 image:
   repository: vhinfrastructure.azurecr.io/hmcts/vh-bookings-api
   pullPolicy: Always
+  tag: latest
 
 nameOverride: ""
 fullnameOverride: ""
 
 service:
   type: ClusterIP
-  port: 443
+  port: 8080
 
 ingress:
   enabled: true
@@ -21,7 +22,7 @@ ingress:
     kubernetes.io/ingress.class: traefik
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: chart-example.local
+    - host: vh-hearings-api-aks.hearings.reform.hmcts.net
       paths:
         - /
 
