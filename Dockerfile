@@ -16,11 +16,11 @@ ARG ServiceBusQueueQueueName
 # All the environment variables used during container runtime
 
 ENV ConnectionStrings:VhBookings=$ConnectionStringsVhBookings
-ENV ApplicationInsights:InstrumentationKey = $ApplicationInsightsInstrumentationKey
-ENV AzureAd:TenantId = $AzureAdTenantId
-ENV VhServices:BookingsApiResourceId = $VhServicesBookingsApiResourceId
-ENV ServiceBusQueue:ConnectionString = $ServiceBusQueueConnectionString
-ENV ServiceBusQueue:QueueName = $ServiceBusQueueQueueName
+ENV ApplicationInsights:InstrumentationKey=$ApplicationInsightsInstrumentationKey
+ENV AzureAd:TenantId=$AzureAdTenantId
+ENV VhServices:BookingsApiResourceId=$VhServicesBookingsApiResourceId
+ENV ServiceBusQueue:ConnectionString=$ServiceBusQueueConnectionString
+ENV ServiceBusQueue:QueueName=$ServiceBusQueueQueueName
 
 ENV ASPNETCORE_ENVIRONMENT Development
  
