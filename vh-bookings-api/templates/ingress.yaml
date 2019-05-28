@@ -1,12 +1,12 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "vh-web-app.fullname" . -}}
+{{- $fullName := include "vh-bookings-api.fullname" . -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    app.kubernetes.io/name: {{ include "vh-web-app.name" . }}
-    helm.sh/chart: {{ include "vh-web-app.chart" . }}
+    app.kubernetes.io/name: {{ include "vh-bookings-api.name" . }}
+    helm.sh/chart: {{ include "vh-bookings-api.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
   {{- with .Values.ingress.annotations }}
