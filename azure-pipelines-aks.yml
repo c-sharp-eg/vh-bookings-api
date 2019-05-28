@@ -158,11 +158,11 @@ stages:
         namespace: 'default'
         tillerNamespace: 'tiller'
         command: 'upgrade'
-        chartName: 'vh-web-app'
+        chartName: 'vh-bookings-api'
         enableTls: true
         caCert: 'vh_kube_dev_ca.cert.pem'
         certificate: 'vh_kube_dev_helm.cert.pem'
         privatekey: 'vh_kube_dev_helm.key.pem'
         waitForExecution: false
-        releaseName: 'vh-web-app'
+        releaseName: 'vh-bookings-api'
         recreate: true
